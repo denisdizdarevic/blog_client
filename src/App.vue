@@ -1,8 +1,8 @@
 <!-- https://vuetifyjs.com/en/examples/wireframes/constrained/ -->
 <template>
   <v-app id="inspire">
-    <v-toolbar flat class="px-2" style="max-height: 64px">
-      <v-tabs color="grey darken-1">
+    <v-app-bar app flat>
+      <v-tabs color="grey darken-1" centered ref="tabs">
         <v-tab v-for="link in links" :key="link.name" :to="link.path">
           {{ link.name }}
         </v-tab>
@@ -12,7 +12,7 @@
         @click.stop="drawer = !drawer"
         v-show="drawerActive"
       />
-    </v-toolbar>
+    </v-app-bar>
 
     <v-navigation-drawer
       right
@@ -25,14 +25,19 @@
     </v-navigation-drawer>
 
     <v-main class="grey lighten-3">
-      <router-view @activateDrawer="setDrawerActive" />
+      <router-view @activateDrawer="setDrawerActive" v-show="!apiError" />
+      <api-error v-show="apiError" />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import ApiError from "@/views/ApiError";
+
 export default {
   name: "App",
+  components: { ApiError },
   data: () => ({
     drawerActive: false,
     drawer: null,
@@ -44,7 +49,9 @@ export default {
   methods: {
     setDrawerActive(value) {
       this.drawerActive = value;
+      this.$refs.tabs.callSlider(); //to fix late layout change
     },
   },
+  computed: mapState(["apiError"]),
 };
 </script>

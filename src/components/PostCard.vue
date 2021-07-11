@@ -7,9 +7,14 @@
       {{ post.title }}
     </v-card-title>
     <v-card-text>
-      {{ post.description }}
+      <div v-html="post.description" />
     </v-card-text>
-    <v-subheader> Author: {{ authorName }} </v-subheader>
+    <v-subheader>
+      Author:
+      <v-chip link label class="ma-2" @click="authorClicked(post.author)">{{
+        authorName
+      }}</v-chip>
+    </v-subheader>
     <v-chip
       link
       label
@@ -24,21 +29,22 @@
 </template>
 
 <script>
+import { authorName } from "@/util";
+
 export default {
   name: "PostCard",
   props: ["post"],
   computed: {
     authorName() {
-      if (this.post.author.first_name || this.post.author.last_name) {
-        return `${this.post.author.first_name} ${this.post.author.last_name}`;
-      } else {
-        return this.post.author.username;
-      }
+      return authorName(this.post.author);
     },
   },
   methods: {
     async tagClicked(tag) {
-      await this.$router.push({ query: { tags__name: tag } });
+      await this.$router.push({ query: { tag: tag } });
+    },
+    async authorClicked(author) {
+      await this.$router.push({ query: { author: author.id } });
     },
   },
 };

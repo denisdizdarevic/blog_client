@@ -12,6 +12,8 @@ export default new Vuex.Store({
     postCount: 0,
     postsPerPage: 10,
     apiError: false,
+    tags: [],
+    authors: [],
   },
   mutations: {
     setPostsAndCount(state, { count, posts }) {
@@ -21,8 +23,25 @@ export default new Vuex.Store({
     apiError(state) {
       state.apiError = true;
     },
+    setFilterData(state, { tags, authors }) {
+      state.tags = tags;
+      state.authors = authors;
+    },
   },
   actions: {
+    async loadFilterData({ commit, state }) {
+      try {
+        let api = await state.api;
+        let response_tags = await api.listTags();
+        let response_authors = await api.listUsers();
+        commit("setFilterData", {
+          tags: response_tags.data,
+          authors: response_authors.data.results,
+        });
+      } catch {
+        commit("apiError");
+      }
+    },
     async loadPosts({ commit, state }, filter) {
       try {
         let api = await state.api;

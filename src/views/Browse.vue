@@ -71,7 +71,6 @@ export default {
   async mounted() {
     this.$emit("activateDrawer", !this.$vuetify.breakpoint.mdAndUp);
     await this.loadPosts();
-    this.$data.loading = false;
   },
   watch: {
     "$vuetify.breakpoint.mdAndUp": function (value) {

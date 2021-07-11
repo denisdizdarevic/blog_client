@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Browse from "@/views/Browse";
 import SideBar from "@/components/SideBar";
+import Post from "@/views/Post";
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,11 @@ const routes = [
       default: Browse,
       navbar: SideBar,
     },
+  },
+  {
+    path: "/post/:post_id",
+    name: "Post",
+    component: Post,
   },
 ];
 

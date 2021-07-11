@@ -1,0 +1,1253 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Blog Server",
+    "version": "1.0.0",
+    "description": "Blog Server API"
+  },
+  "paths": {
+    "http://127.0.0.1:8000/auth/get/": {
+      "get": {
+        "operationId": "retrieveAuth",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/user/": {
+      "get": {
+        "operationId": "listUsers",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/user/{id}/": {
+      "get": {
+        "operationId": "retrieveUser",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this user.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/tag/": {
+      "get": {
+        "operationId": "listTags",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "tag"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/post/": {
+      "get": {
+        "operationId": "listPosts",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "title__contains",
+            "required": false,
+            "in": "query",
+            "description": "title__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description__contains",
+            "required": false,
+            "in": "query",
+            "description": "description__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "author",
+            "required": false,
+            "in": "query",
+            "description": "author",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__gte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__gte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__lte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__lte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "description": "tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Post"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "post": {
+        "operationId": "createPost",
+        "description": "",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/post/{id}/": {
+      "get": {
+        "operationId": "retrievePost",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this post.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title__contains",
+            "required": false,
+            "in": "query",
+            "description": "title__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description__contains",
+            "required": false,
+            "in": "query",
+            "description": "description__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "author",
+            "required": false,
+            "in": "query",
+            "description": "author",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__gte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__gte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__lte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__lte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "description": "tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "put": {
+        "operationId": "updatePost",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this post.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title__contains",
+            "required": false,
+            "in": "query",
+            "description": "title__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description__contains",
+            "required": false,
+            "in": "query",
+            "description": "description__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "author",
+            "required": false,
+            "in": "query",
+            "description": "author",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__gte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__gte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__lte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__lte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "description": "tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "patch": {
+        "operationId": "partialUpdatePost",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this post.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title__contains",
+            "required": false,
+            "in": "query",
+            "description": "title__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description__contains",
+            "required": false,
+            "in": "query",
+            "description": "description__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "author",
+            "required": false,
+            "in": "query",
+            "description": "author",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__gte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__gte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__lte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__lte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "description": "tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "delete": {
+        "operationId": "destroyPost",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this post.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title__contains",
+            "required": false,
+            "in": "query",
+            "description": "title__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description__contains",
+            "required": false,
+            "in": "query",
+            "description": "description__contains",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "author",
+            "required": false,
+            "in": "query",
+            "description": "author",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__gte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__gte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp_created__date__lte",
+            "required": false,
+            "in": "query",
+            "description": "timestamp_created__date__lte",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "description": "tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/post/{id}/content/": {
+      "get": {
+        "operationId": "contentPost",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this post.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/post/{id}/like/": {
+      "get": {
+        "operationId": "likePost",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this post.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/post/{parent_lookup_post}/comment/": {
+      "get": {
+        "operationId": "listPostComments",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parent_lookup_post",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Comment"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "post": {
+        "operationId": "createPostComment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parent_lookup_post",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/post/{parent_lookup_post}/comment/{id}/": {
+      "get": {
+        "operationId": "retrievePostComment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parent_lookup_post",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this comment.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "put": {
+        "operationId": "updatePostComment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parent_lookup_post",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this comment.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "patch": {
+        "operationId": "partialUpdatePostComment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parent_lookup_post",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this comment.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "delete": {
+        "operationId": "destroyPostComment",
+        "description": "",
+        "parameters": [
+          {
+            "name": "parent_lookup_post",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "A unique integer value identifying this comment.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "http://127.0.0.1:8000/auth/register/": {
+      "post": {
+        "operationId": "registerAuth",
+        "description": "",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {}
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {}
+            },
+            "multipart/form-data": {
+              "schema": {}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "username": {
+            "type": "string",
+            "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+            "pattern": "^[\\w.@+-]+\\z",
+            "maxLength": 150
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "readOnly": true
+          },
+          "first_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 150
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "tags": {
+            "type": "string"
+          },
+          "like_me": {
+            "type": "string",
+            "readOnly": true
+          },
+          "like_count": {
+            "type": "string",
+            "readOnly": true
+          },
+          "comment_count": {
+            "type": "string",
+            "readOnly": true
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "username": {
+                "type": "string",
+                "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                "pattern": "^[\\w.@+-]+\\z",
+                "maxLength": 150
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "maxLength": 254
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "readOnly": true
+              },
+              "first_name": {
+                "type": "string",
+                "maxLength": 150
+              },
+              "last_name": {
+                "type": "string",
+                "maxLength": 150
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "readOnly": true
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "timestamp_created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "timestamp_edited": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "tags",
+          "title",
+          "description",
+          "content"
+        ]
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "username": {
+                "type": "string",
+                "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                "pattern": "^[\\w.@+-]+\\z",
+                "maxLength": 150
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "maxLength": 254
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "readOnly": true
+              },
+              "first_name": {
+                "type": "string",
+                "maxLength": 150
+              },
+              "last_name": {
+                "type": "string",
+                "maxLength": 150
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "readOnly": true
+          },
+          "content": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "post": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "content"
+        ]
+      }
+    }
+  }
+}

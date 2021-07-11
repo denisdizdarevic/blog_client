@@ -3,11 +3,14 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+const SCHEMA_URL = "/openapi";
+
 export default new Vuex.Store({
   state: {
     api: new OpenAPIClientAxios({
-      definition: "http://127.0.0.1:8000/openapi",
+      definition: SCHEMA_URL,
     }).init(),
+    loggedIn: false,
     posts: [],
     postCount: 0,
     postsPerPage: 10,
@@ -20,15 +23,43 @@ export default new Vuex.Store({
       state.postCount = count;
       state.posts = posts;
     },
-    apiError(state) {
+    apiError(state, error) {
+      console.error(error);
       state.apiError = true;
     },
     setFilterData(state, { tags, authors }) {
       state.tags = tags;
       state.authors = authors;
     },
+    setApi(state, { api, loggedIn }) {
+      state.loggedIn = loggedIn;
+      state.api = api;
+    },
   },
   actions: {
+    logIn({ commit }, { username, password }) {
+      commit("setApi", {
+        api: new OpenAPIClientAxios({
+          definition: SCHEMA_URL,
+          axiosConfigDefaults: {
+            withCredentials: true,
+            auth: {
+              username,
+              password,
+            },
+          },
+        }).init(),
+        loggedIn: true,
+      });
+    },
+    logOut({ commit }) {
+      commit("setApi", {
+        api: new OpenAPIClientAxios({
+          definition: SCHEMA_URL,
+        }).init(),
+        loggedIn: false,
+      });
+    },
     async loadFilterData({ commit, state }) {
       try {
         let api = await state.api;
@@ -38,8 +69,8 @@ export default new Vuex.Store({
           tags: response_tags.data,
           authors: response_authors.data.results,
         });
-      } catch {
-        commit("apiError");
+      } catch (error) {
+        commit("apiError", error);
       }
     },
     async loadPosts({ commit, state }, filter) {
@@ -50,8 +81,8 @@ export default new Vuex.Store({
           count: response.data.count,
           posts: response.data.results,
         });
-      } catch {
-        commit("apiError");
+      } catch (error) {
+        commit("apiError", error);
       }
     },
   },

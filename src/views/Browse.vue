@@ -14,7 +14,7 @@
           v-for="post in posts"
           :key="post.id"
           :post="post"
-          class="mb-3"
+          class="my-6"
         />
         <v-container>
           <v-row justify="center">

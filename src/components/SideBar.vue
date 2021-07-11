@@ -152,7 +152,6 @@ export default {
           query.tag = this.$route.query.tag;
         }
       }
-      console.log(query);
       this.query = query;
     },
     async searchClicked() {

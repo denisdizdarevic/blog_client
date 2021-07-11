@@ -1,9 +1,15 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row justify="center">
+      <v-col cols="12" md="9" xl="6">
         <v-sheet>
-          <hello-world />
+          <h1 class="text-center">Generični Blog Sistem</h1>
+          Ovo je generični blog sistem. Namjenjen je ispitima, nije spreman za
+          komercijalno korišćenje. Glavni sistemi su Django i Vue. Responzivan
+          je (tj prilagodljiv različitim veličinama ekrana), koristi pretragu i
+          paginaciju. Korisnici mogu postavljati objave i pisati komentare. Sve
+          je tu, i ovo je otprilike jedan kratak i prost opis na landing
+          stranici jer je to jedan od zahtjeva.
         </v-sheet>
       </v-col>
     </v-row>
@@ -11,13 +17,7 @@
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
-
 export default {
   name: "Home",
-
-  components: {
-    HelloWorld,
-  },
 };
 </script>

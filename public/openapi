@@ -6,7 +6,7 @@
     "description": "Blog Server API"
   },
   "paths": {
-    "http://127.0.0.1:8000/auth/get/": {
+    "/api/auth/get/": {
       "get": {
         "operationId": "retrieveAuth",
         "description": "",
@@ -22,11 +22,11 @@
           }
         },
         "tags": [
-          "auth"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/user/": {
+    "/api/user/": {
       "get": {
         "operationId": "listUsers",
         "description": "",
@@ -78,11 +78,11 @@
           }
         },
         "tags": [
-          "user"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/user/{id}/": {
+    "/api/user/{id}/": {
       "get": {
         "operationId": "retrieveUser",
         "description": "",
@@ -110,11 +110,11 @@
           }
         },
         "tags": [
-          "user"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/tag/": {
+    "/api/tag/": {
       "get": {
         "operationId": "listTags",
         "description": "",
@@ -133,11 +133,11 @@
           }
         },
         "tags": [
-          "tag"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/post/": {
+    "/api/post/": {
       "get": {
         "operationId": "listPosts",
         "description": "",
@@ -243,7 +243,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "post": {
@@ -282,11 +282,11 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/post/{id}/": {
+    "/api/post/{id}/": {
       "get": {
         "operationId": "retrievePost",
         "description": "",
@@ -368,7 +368,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "put": {
@@ -471,7 +471,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "patch": {
@@ -574,7 +574,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "delete": {
@@ -651,11 +651,11 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/post/{id}/content/": {
+    "/api/post/{id}/content/": {
       "get": {
         "operationId": "contentPost",
         "description": "",
@@ -683,11 +683,11 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/post/{id}/like/": {
+    "/api/post/{id}/like/": {
       "get": {
         "operationId": "likePost",
         "description": "",
@@ -715,11 +715,11 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/post/{parent_lookup_post}/comment/": {
+    "/api/post/{parent_lookup_post}/comment/": {
       "get": {
         "operationId": "listPostComments",
         "description": "",
@@ -780,7 +780,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "post": {
@@ -829,11 +829,11 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/post/{parent_lookup_post}/comment/{id}/": {
+    "/api/post/{parent_lookup_post}/comment/{id}/": {
       "get": {
         "operationId": "retrievePostComment",
         "description": "",
@@ -870,7 +870,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "put": {
@@ -928,7 +928,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "patch": {
@@ -986,7 +986,7 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       },
       "delete": {
@@ -1018,11 +1018,11 @@
           }
         },
         "tags": [
-          "post"
+          "api"
         ]
       }
     },
-    "http://127.0.0.1:8000/auth/register/": {
+    "/api/auth/register/": {
       "post": {
         "operationId": "registerAuth",
         "description": "",
@@ -1051,7 +1051,7 @@
           }
         },
         "tags": [
-          "auth"
+          "api"
         ]
       }
     }
